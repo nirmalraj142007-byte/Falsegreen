@@ -20,6 +20,7 @@ class Settings(BaseSettings):
     exec_timeout_multiplier: float = 4.0
     budget_usd_hard_stop: float = 250.0
     db_path: Path = Path("results.db")
+    max_findings_per_run: int = 3
     docs_dir: Path = Path("docs")
     log_level: str = "INFO"
 
