@@ -35,12 +35,30 @@ def test_doctor_runs_without_crashing() -> None:
 
 @pytest.mark.parametrize(
     "command",
-    ["sandbox", "checkpoint", "data", "agent", "bench", "audit", "replay", "demo", "publish"],
+    ["checkpoint", "data", "agent", "bench", "audit", "replay", "demo", "publish"],
 )
 def test_stub_commands_raise_not_implemented(command: str) -> None:
     result = runner.invoke(app, [command])
     assert result.exit_code != 0
     assert isinstance(result.exception, NotImplementedError)
+
+
+def test_sandbox_group_shows_help_when_no_subcommand() -> None:
+    result = runner.invoke(app, ["sandbox"])
+    assert result.exit_code == 0
+    assert "smoke" in result.stdout
+    assert "gc" in result.stdout
+
+
+def test_sandbox_smoke_without_backend_option_errors() -> None:
+    result = runner.invoke(app, ["sandbox", "smoke"])
+    assert result.exit_code != 0
+
+
+def test_sandbox_smoke_unknown_backend_raises_config_error() -> None:
+    result = runner.invoke(app, ["sandbox", "smoke", "--backend", "not-a-real-backend"])
+    assert result.exit_code != 0
+    assert isinstance(result.exception, errors.ConfigError)
 
 
 def test_db_init_and_stats(monkeypatch, tmp_path) -> None:

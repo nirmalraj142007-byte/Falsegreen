@@ -4,11 +4,13 @@ import typer
 
 from falsegreen import __version__
 from falsegreen.cli import db as db_cli
+from falsegreen.cli import sandbox as sandbox_cli
 from falsegreen.cli.doctor import run_doctor
 from falsegreen.errors import FalseGreenError
 
 app = typer.Typer(name="falsegreen", no_args_is_help=True)
 app.add_typer(db_cli.app, name="db")
+app.add_typer(sandbox_cli.app, name="sandbox")
 
 
 def _version_callback(value: bool) -> None:
@@ -35,12 +37,6 @@ def doctor() -> None:
 
 def _not_implemented(name: str) -> None:
     raise NotImplementedError(f"`falsegreen {name}` is not implemented yet.")
-
-
-@app.command()
-def sandbox() -> None:
-    """Manage sandbox backends and checkpoints."""
-    _not_implemented("sandbox")
 
 
 @app.command()

@@ -37,6 +37,12 @@ dev = [
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
+# tests/fixtures/tinyrepo is a standalone fixture package with its own test
+# suite, meant to run only inside its Docker image -- never collected here.
+addopts = "--ignore=tests/fixtures/tinyrepo"
+markers = [
+    "requires_docker: test requires a local Docker daemon",
+]
 
 [tool.ruff]
 line-length = 100
