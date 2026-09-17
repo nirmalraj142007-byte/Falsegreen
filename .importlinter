@@ -1,0 +1,27 @@
+[importlinter]
+root_package = falsegreen
+include_external_packages = True
+
+[importlinter:contract:falsegreen-layers]
+name = falsegreen-layers
+type = layers
+layers =
+    falsegreen.cli
+    falsegreen.report
+    falsegreen.data | falsegreen.agent
+    falsegreen.store
+    falsegreen.sandbox
+    falsegreen.guard | falsegreen.score
+    falsegreen.config | falsegreen.errors | falsegreen.logging
+
+[importlinter:contract:score-is-model-free]
+name = score-is-model-free
+type = forbidden
+source_modules =
+    falsegreen.score
+    falsegreen.guard
+forbidden_modules =
+    httpx
+    openai
+    falsegreen.agent
+    falsegreen.sandbox

@@ -1,0 +1,43 @@
+[project]
+name = "falsegreen"
+version = "0.0.1"
+description = "Finds bugs nobody has reported yet, and proves each one against the fix that actually shipped."
+license = "Apache-2.0"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "typer==0.12.5",
+    "click==8.1.7",
+    "rich==13.9.4",
+    "pydantic==2.9.2",
+    "pydantic-settings==2.6.1",
+    "httpx==0.27.2",
+    "tenacity==8.5.0",
+    "jinja2==3.1.4",
+    "statsmodels==0.14.4",
+]
+
+[project.scripts]
+falsegreen = "falsegreen.cli.main:app"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["falsegreen"]
+
+[dependency-groups]
+dev = [
+    "pytest==8.3.3",
+    "pytest-asyncio==0.24.0",
+    "ruff==0.7.4",
+    "import-linter==2.1",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
